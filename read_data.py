@@ -13,8 +13,8 @@ import os
 def read_data():
     pd.set_option('display.max_columns', 500)
     
-    directory = '/Users/riastevens/Desktop/finances/hmd/daily/us/nyse_stocks/testers/'
-    
+    #directory = '/Users/riastevens/Desktop/finances/hmd/daily/us/nyse_stocks/testers/'
+    directory = '/'
     stock_dict = {}
     
     for file in os.listdir(directory):
