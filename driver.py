@@ -10,13 +10,13 @@ import datetime
 import numpy as np
 from read_data import read_data
 from algorithm import run_algo
-using_config = False #automate testing and use a config file
+using_config = True #automate testing and use a config file
 config_file_name = "settings.cfg" #name of  config file TODO let the user choose this
 
 initial_investment = 0
 start_date = None
 end_date = None
- 
+
 
 
 def get_config_from_console():
