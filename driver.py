@@ -16,7 +16,7 @@ config_file_name = "settings.cfg" #name of  config file TODO let the user choose
 initial_investment = 0
 start_date = None
 end_date = None
-
+ 
 
 
 def get_config_from_console():
