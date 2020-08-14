@@ -13,8 +13,8 @@ import os
 def read_data():
     pd.set_option('display.max_columns', 500)
     
-    directory = '/Users/riastevens/Desktop/finances/hmd/daily/us/nyse_stocks/testers/'
-    
+    #directory = '/Users/riastevens/Desktop/finances/hmd/daily/us/nyse_stocks/testers/'
+    directory = 'D:\Programming\Python\BackTester\\'
     stock_dict = {}
     
     for file in os.listdir(directory):
@@ -27,8 +27,10 @@ def read_data():
                              usecols = ['<DATE>', '<OPEN>', '<HIGH>', '<LOW>', '<CLOSE>', '<VOL>'],
                              parse_dates = ['<DATE>'],
                              header = 0)
+
         except:
             continue
+
         
         ticker = file.split('.')
         ticker = ticker[0]
