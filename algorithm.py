@@ -53,27 +53,27 @@ def decide(df, date, ticker):
     date_loc = df.index.get_loc(date)
           
     if date_loc >= 50:
-        for i in range(50, 0, -1):
-            past_date = date_loc - i
-            past_ma = df.iloc[past_date, 6]
-            if not math.isnan(past_ma):
-                delete_close = df.iloc[past_date, 3]
-                sum_50 = past_ma - delete_close + mv_close
-                mov_avg_50 = sum_50 / 50
-                break
+        past_date = date_loc - 1
+        past_ma = df.iloc[past_date, 6]
+        if not math.isnan(past_ma):
+            delete_close = df.iloc[date_loc - 50, 3]
+            sum_50 = past_ma * 50 - delete_close + mv_close
+            mov_avg_50 = sum_50 / 50
         if math.isnan(mov_avg_50):
             mov_avg_50 = calculate_ma_50(df, date_loc)
         
-        for i in range(10, 0, -1):
-            past_date = date_loc - i
-            past_ma = df.iloc[past_date, 6]
-            if not math.isnan(past_ma):
-                delete_close = df.iloc[past_date, 3]
-                sum_10 = past_ma - delete_close + mv_close
-                mov_avg_10 = sum_10 / 10
-                break
+        df.loc[date, '<50-DAY MOVING AVERAGE>'] = mov_avg_50
+        
+        past_date = date_loc - 1
+        past_ma = df.iloc[past_date, 5]
+        if not math.isnan(past_ma):
+            delete_close = df.iloc[date_loc - 10, 3]
+            sum_10 = past_ma * 10 - delete_close + mv_close
+            mov_avg_10 = sum_10 / 10
         if math.isnan(mov_avg_10):
             mov_avg_10 = calculate_ma_10(df, date_loc)
+        
+        df.loc[date, '<10-DAY MOVING AVERAGE>'] = mov_avg_10
             
     if mov_avg_10 > mov_avg_50:
         if cash >= mv_close:

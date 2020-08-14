@@ -5,13 +5,19 @@ Created on Tue Aug 11 18:07:55 2020
 
 @author: riastevens
 """
+from pandas.plotting import register_matplotlib_converters
 import matplotlib.pyplot as plt
 import datetime
 import numpy as np
 from read_data import read_data
 from algorithm import run_algo
+from tabulate import tabulate
+
+
 using_config = True #automate testing and use a config file
-config_file_name = "settings.cfg" #name of  config file TODO let the user choose this
+config_file_name = "settings.cfg" #name of  config file TODO let the user choose thi
+
+
 
 initial_investment = 0
 start_date = None
@@ -83,11 +89,17 @@ stock_dict = read_data()
 
 moves, equities = run_algo(stock_dict, start_date, end_date, initial_investment)
 
-for date in equities:
-    print(str(date) + ': $' + str(equities[date]))
+
+df = stock_dict['abt'][0]
+print(tabulate(df, headers=['Date', 'Open', 'High', 'Low', 'Close', 'Vol', '10-Day Moving Average', '50-Day Moving Average']))
+    
+#for date in equities:
+   # print(str(date) + ': $' + str(equities[date]))
 
 dates = list(equities.keys())
 equity_list = list(equities.values())
+
+register_matplotlib_converters()
 
 plt.plot(dates, equity_list)
 plt.show()
