@@ -3,8 +3,8 @@
 Backtests a trading strategy against historic market data
 
 # Next Steps
-Build more detailed graphs \n
-Improve the trading strategy \n
+Build more detailed graph
+Improve the trading strategy
 Create a webpage!
 
 # Config files
@@ -19,7 +19,7 @@ e.g.
 01-01-2020
 
 # Driver.py
-Gets start date, end date and initial investments from user or config file \n
+Gets start date, end date and initial investments from user or config file
 Calls read_data, algorithm to simulate the market
 Plots total equity in portfolio from start date to end date
 
