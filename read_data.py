@@ -10,6 +10,7 @@ import pandas as pd
 import os
 from datetime import datetime
 import numpy as np
+from lstm import train
 
 def read_data(start, end):
     pd.set_option('display.max_columns', 500)
@@ -51,7 +52,10 @@ def read_data(start, end):
         
         ticker = input_file.split('.')
         ticker = ticker[0]
-
+        print(ticker)
+        train(stock_df)
+        
         stock_dict[ticker] = (stock_df, stock_start, stock_end) 
+        break
      
     return stock_dict
