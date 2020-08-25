@@ -11,7 +11,7 @@ import datetime
 import numpy as np
 from read_data import read_data
 from algorithm import run_algo
-from tabulate import tabulate
+#from tabulate import tabulate
 
 
 using_config = True #automate testing and use a config file
@@ -85,25 +85,36 @@ else:
     get_config_from_file()
 
 
-stock_dict = read_data()
+stock_dict = read_data(start_date, end_date)
 
-moves, equities = run_algo(stock_dict, start_date, end_date, initial_investment)
+movesLSTM, equitiesLSTM, movesMA, equitiesMA = run_algo(stock_dict, start_date, end_date, initial_investment)
 
 
-df = stock_dict['abt'][0]
-print(tabulate(df, headers=['Date', 'Open', 'High', 'Low', 'Close', 'Vol', '10-Day Moving Average', '50-Day Moving Average']))
+
+#df = stock_dict['abt'][0]
+#print(tabulate(df, headers=['Date', 'Open', 'High', 'Low', 'Close', 'Vol', '10-Day Moving Average', '50-Day Moving Average']))
     
-#for date in equities:
-   # print(str(date) + ': $' + str(equities[date]))
+#for date in equitiesLSTM:
+  #  print(str(date) + ': $' + str(equitiesLSTM[date]))
 
-dates = list(equities.keys())
-equity_list = list(equities.values())
+dates = list(equitiesLSTM.keys())
+equityLSTM_list = list(equitiesLSTM.values())
+equityMA_list = list(equitiesMA.values())
 
 register_matplotlib_converters()
 
-plt.plot(dates, equity_list)
+plt.plot(dates, equityLSTM_list, color = 'blue', label = 'LSTM results')
+plt.plot(dates, equityMA_list, color = 'green', label = 'MA results')
+plt.title('MA vs LSTM perfomance')
+plt.xlabel('Date')
+plt.ylabel('Equity')
+plt.legend()
 plt.show()
 
-moves_file = open("moves.txt", "w")
-moves_file.write(moves)
-moves_file.close()
+movesLSTM_file = open("movesLSTM.txt", "w")
+movesLSTM_file.write(movesLSTM)
+movesLSTM_file.close()
+
+movesMA_file = open("movesMA.txt", "w")
+movesMA_file.write(movesMA)
+movesMA_file.close()

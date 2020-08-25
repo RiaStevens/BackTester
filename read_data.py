@@ -33,7 +33,7 @@ def read_data(start, end):
                 for line in f:
                     pass
                 stock_end = line.split(',')[2]
-
+            
             stock_start = datetime.strptime(stock_start, '%Y%m%d')
             stock_start = np.datetime64(stock_start)
             stock_end = datetime.strptime(stock_end, '%Y%m%d')
@@ -50,12 +50,17 @@ def read_data(start, end):
         except:
             continue
         
-        ticker = input_file.split('.')
-        ticker = ticker[0]
-        print(ticker)
-        train(stock_df)
+        ticker = input_file.split('.')[0]
+
+        predict_start = start
+        if stock_start > start:
+            predict_start = stock_start
+        
+        predictions = train(stock_df, predict_start)
+        
+        stock_df['<PREDICTIONS>'] = predictions
         
         stock_dict[ticker] = (stock_df, stock_start, stock_end) 
-        break
+        
      
     return stock_dict
