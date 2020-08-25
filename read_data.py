@@ -11,12 +11,14 @@ import os
 from datetime import datetime
 import numpy as np
 from lstm import train
+import platform
 
 def read_data(start, end):
     pd.set_option('display.max_columns', 500)
     
     directory = './testers/'
-    
+    if platform.system() == "Windows": #windows workaround for path issues
+        directory = "D:\Programming\Python\BackTester\\"
     stock_dict = {}
     stock_start = 0
     stock_end = 0

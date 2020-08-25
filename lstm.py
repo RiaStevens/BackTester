@@ -23,7 +23,7 @@ from keras.layers import Dense, LSTM
     
 def train(df, sim_start):
     
-    split_pos = 0
+    split_pos = 0 #The date at which data is no longer used to train and is now used to test predictions
     find_date = pd.Timestamp(sim_start)
     done = False
     
@@ -77,7 +77,7 @@ def train(df, sim_start):
     
     y_save = y_train
     y_train = scaler.fit_transform(y_train.reshape(-1,1))
-    y_test = scaler.transform(y_test.reshape(-1,1))
+
 
     y_train = y_train.reshape(1,-1)[0]
     
@@ -97,9 +97,12 @@ def train(df, sim_start):
     results = np.array([first_y])
     results = np.append(results, y_save)
     results = np.append(results, y_predictions)
+
+    y_test = y_test.reshape(1, -1)[0]
+    display_predicted_vs_actual(y_test, y_predictions) #visualize predicted vs actual performance
     return results
 
-def display(actual, predicted):
+def display_predicted_vs_actual(actual, predicted):
     
     plt.plot(actual, color = 'blue', label = 'Actual Stock Price')
     plt.plot(predicted, color = 'green', label = 'Predicted Stock Price')
@@ -109,4 +112,4 @@ def display(actual, predicted):
     plt.legend()
     plt.show()
     
-    
+
